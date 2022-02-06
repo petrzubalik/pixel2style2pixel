@@ -3,6 +3,8 @@ Code adopted from pix2pixHD:
 https://github.com/NVIDIA/pix2pixHD/blob/master/data/image_folder.py
 """
 import os
+from scripts.align_all_parallel import align_face
+import dlib
 
 IMG_EXTENSIONS = [
     '.jpg', '.JPG', '.jpeg', '.JPEG',
@@ -23,3 +25,10 @@ def make_dataset(dir):
                 path = os.path.join(root, fname)
                 images.append(path)
     return images
+
+
+def align_face_image(image_path: str, ):
+    predictor = dlib.shape_predictor("models/shape_predictor/shape_predictor_68_face_landmarks.dat")
+    aligned_image = align_face(filepath=image_path, predictor=predictor)
+    print("Aligned image has shape: {}".format(aligned_image.size))
+    return aligned_image

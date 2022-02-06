@@ -80,7 +80,7 @@ def run():
         for i in range(opts.test_batch_size):
             result = tensor2im(result_batch[i])
             im_path = dataset.paths[global_i]
-
+            split_path = os.path.normpath(im_path).split(os.path.sep)
             if opts.couple_outputs or global_i % 100 == 0:
                 input_im = log_input_image(input_batch[i], opts)
                 resize_amount = (256, 256) if opts.resize_outputs else (opts.output_size, opts.output_size)
@@ -94,9 +94,8 @@ def run():
                     # otherwise, save the original and output
                     res = np.concatenate([np.array(input_im.resize(resize_amount)),
                                           np.array(result.resize(resize_amount))], axis=1)
-                Image.fromarray(res).save(os.path.join(out_path_coupled, os.path.basename(im_path)))
-
-            im_save_path = os.path.join(out_path_results, os.path.basename(im_path))
+                Image.fromarray(res).save(os.path.join(out_path_coupled, split_path[-2], os.path.basename(im_path)))
+            im_save_path = os.path.join(out_path_results, split_path[-2], os.path.basename(im_path))
             Image.fromarray(np.array(result)).save(im_save_path)
 
             global_i += 1
