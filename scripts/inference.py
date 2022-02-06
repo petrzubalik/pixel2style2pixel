@@ -54,6 +54,7 @@ def run():
     dataset_args = data_configs.DATASETS[opts.dataset_type]
     transforms_dict = dataset_args['transforms'](opts).get_transforms()
     dataset = InferenceDataset(root=opts.data_path,
+                               predictor_path="../shape_predictor_68_face_landmarks.dat",
                                transform=transforms_dict['transform_inference'],
                                opts=opts)
     dataloader = DataLoader(dataset,

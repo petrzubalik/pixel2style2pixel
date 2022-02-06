@@ -27,8 +27,8 @@ def make_dataset(dir):
     return images
 
 
-def align_face_image(image_path: str, ):
-    predictor = dlib.shape_predictor("models/shape_predictor/shape_predictor_68_face_landmarks.dat")
+def align_face_image(image_path: str, predictor_path: str):
+    predictor = dlib.shape_predictor(predictor_path)
     aligned_image = align_face(filepath=image_path, predictor=predictor)
     print("Aligned image has shape: {}".format(aligned_image.size))
     return aligned_image

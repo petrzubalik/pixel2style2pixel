@@ -7,11 +7,11 @@ from scripts.align_all_parallel import align_face
 
 class InferenceDataset(Dataset):
 
-	def __init__(self, root, opts, transform=None):
+	def __init__(self, root, opts, predictor_path, transform=None):
 		self.paths = sorted(data_utils.make_dataset(root))
 		self.transform = transform
 		self.opts = opts
-		self.predictor = dlib.shape_predictor("models/shape_predictor/shape_predictor_68_face_landmarks.dat")
+		self.predictor = dlib.shape_predictor(predictor_path)
 
 	def __len__(self):
 		return len(self.paths)
