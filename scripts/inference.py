@@ -82,6 +82,7 @@ def run():
             result = tensor2im(result_batch[i])
             im_path = dataset.paths[global_i]
             split_path = os.path.normpath(im_path).split(os.path.sep)
+            os.makedirs(os.path.join(out_path_coupled, split_path[-2]), exist_ok=True)
             if opts.couple_outputs or global_i % 100 == 0:
                 input_im = log_input_image(input_batch[i], opts)
                 resize_amount = (256, 256) if opts.resize_outputs else (opts.output_size, opts.output_size)
