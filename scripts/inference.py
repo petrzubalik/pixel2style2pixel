@@ -85,8 +85,8 @@ def run():
             result_batch = run_on_batch(input_cuda, net, opts)
             toc = time.time()
             global_time.append(toc - tic)
-
-        for i in range(opts.test_batch_size):
+            print("result == ", result_batch)
+        for i in range(len(input_batch)):
             result = tensor2im(result_batch[i])
             im_path = dataset.paths[global_i]
             split_path = os.path.normpath(im_path).split(os.path.sep)
