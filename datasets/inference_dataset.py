@@ -17,10 +17,13 @@ class InferenceDataset(Dataset):
 		return len(self.paths)
 
 	def __getitem__(self, index):
-		from_path = self.paths[index]
-		# from_im = Image.open(from_path)
-		# from_im = from_im.convert('RGB') if self.opts.label_nc == 0 else from_im.convert('L')
-		from_im = align_face(filepath=from_path, predictor=self.predictor)
-		if self.transform:
-			from_im = self.transform(from_im)
-		return from_im
+		try:
+			from_path = self.paths[index]
+			# from_im = Image.open(from_path)
+			# from_im = from_im.convert('RGB') if self.opts.label_nc == 0 else from_im.convert('L')
+			from_im = align_face(filepath=from_path, predictor=self.predictor)
+			if self.transform:
+				from_im = self.transform(from_im)
+			return from_im
+		except Exception as e:
+			print(e)

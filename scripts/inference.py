@@ -7,6 +7,8 @@ import numpy as np
 import torch
 from PIL import Image
 from torch.utils.data import DataLoader
+from torch.utils.data._utils.collate import default_collate
+
 import sys
 
 sys.path.append(".")
@@ -17,6 +19,11 @@ from datasets.inference_dataset import InferenceDataset
 from utils.common import tensor2im, log_input_image
 from options.test_options import TestOptions
 from models.psp import pSp
+
+
+def collate(batch):
+    batch = filter(lambda x: x is not None, batch)
+    return default_collate(batch)
 
 
 def run():
@@ -61,7 +68,8 @@ def run():
                             batch_size=opts.test_batch_size,
                             shuffle=False,
                             num_workers=int(opts.test_workers),
-                            drop_last=True)
+                            drop_last=True,
+                            collate_fn=collate)
 
     if opts.n_images is None:
         opts.n_images = len(dataset)
