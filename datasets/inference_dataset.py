@@ -9,11 +9,11 @@ from scripts.align_all_parallel import align_face
 class InferenceDataset(Dataset):
 
 	def __init__(self, root, opts, predictor_path, transform=None):
+		self.predictor = dlib.shape_predictor(predictor_path)
 		self.paths = self._get_paths(root)
 		print(self.paths)
 		self.transform = transform
 		self.opts = opts
-		self.predictor = dlib.shape_predictor(predictor_path)
 
 	def __len__(self):
 		return len(self.paths)
@@ -34,10 +34,10 @@ class InferenceDataset(Dataset):
 		paths = sorted(data_utils.make_dataset(root))
 		result_paths = []
 		for path in paths:
-			# try:
+			try:
 				align_face(filepath=path, predictor=self.predictor)
 				result_paths.append(path)
-			# except Exception as e:
-			# 	print(e)
+			except Exception as e:
+				print(e)
 		return result_paths
 
