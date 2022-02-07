@@ -34,10 +34,10 @@ class InferenceDataset(Dataset):
 		paths = sorted(data_utils.make_dataset(root))
 		result_paths = []
 		for path in paths:
-			try:
+			# try:
 				align_face(filepath=path, predictor=self.predictor)
 				result_paths.append(path)
-			except Exception as e:
-				print(e)
+			# except Exception as e:
+			# 	print(e)
 		return result_paths
 
