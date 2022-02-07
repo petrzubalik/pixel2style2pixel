@@ -10,6 +10,7 @@ class InferenceDataset(Dataset):
 
 	def __init__(self, root, opts, predictor_path, transform=None):
 		self.paths = self._get_paths(root)
+		print(self.paths)
 		self.transform = transform
 		self.opts = opts
 		self.predictor = dlib.shape_predictor(predictor_path)
