@@ -24,13 +24,12 @@ import scipy.ndimage
 import dlib
 import multiprocessing as mp
 import math
-from facenet_pytorch import MTCNN
 
 from configs.paths_config import model_paths
 SHAPE_PREDICTOR_PATH = model_paths["shape_predictor"]
 
 
-def get_landmark(filepath, predictor, mtcnn_detector):
+def get_landmark(filepath, predictor):
 	"""get landmark with dlib
 	:return: np.array shape=(68, 2)
 	"""
@@ -38,8 +37,7 @@ def get_landmark(filepath, predictor, mtcnn_detector):
 
 	img = dlib.load_rgb_image(filepath)
 	dets = detector(img, 1)
-	if dets is None:
-		dets = mtcnn_detector.detect(img, landmarks=False)
+
 	for k, d in enumerate(dets):
 		shape = predictor(img, d)
 
@@ -51,13 +49,13 @@ def get_landmark(filepath, predictor, mtcnn_detector):
 	return lm
 
 
-def align_face(filepath, predictor, mtcnn_detector):
+def align_face(filepath, predictor):
 	"""
 	:param filepath: str
 	:return: PIL Image
 	"""
 
-	lm = get_landmark(filepath, predictor, mtcnn_detector)
+	lm = get_landmark(filepath, predictor)
 
 	lm_chin = lm[0: 17]  # left-right
 	lm_eyebrow_left = lm[17: 22]  # left-right
