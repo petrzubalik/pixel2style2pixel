@@ -37,7 +37,7 @@ class InferenceDataset(Dataset):
 			try:
 				align_face(filepath=path, predictor=self.predictor)
 				result_paths.append(path)
-			except Exception:
-				pass
+			except Exception as e:
+				print(e)
 		return result_paths
 
