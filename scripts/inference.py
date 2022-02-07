@@ -22,7 +22,7 @@ from models.psp import pSp
 
 
 def collate(batch):
-    batch = filter(lambda x: x is not None, batch)
+    batch = list(filter(lambda x: x is not None, batch))
     return default_collate(batch)
 
 
