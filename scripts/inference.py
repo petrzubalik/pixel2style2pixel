@@ -76,6 +76,7 @@ def run():
 
     global_i = 0
     global_time = []
+    print(len(dataloader))
     for input_batch in dataloader:
         if global_i >= opts.n_images:
             break
@@ -85,7 +86,6 @@ def run():
             result_batch = run_on_batch(input_cuda, net, opts)
             toc = time.time()
             global_time.append(toc - tic)
-            print("result == ", result_batch)
         for i in range(len(input_batch)):
             result = tensor2im(result_batch[i])
             im_path = dataset.paths[global_i]
