@@ -76,7 +76,7 @@ def run():
 
     global_i = 0
     global_time = []
-    for input_batch in tqdm(dataloader):
+    for input_batch in dataloader:
         if global_i >= opts.n_images:
             break
         with torch.no_grad():
