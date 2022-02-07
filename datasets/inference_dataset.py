@@ -10,7 +10,7 @@ from facenet_pytorch import MTCNN
 class InferenceDataset(Dataset):
 
 	def __init__(self, root, opts, predictor_path, transform=None):
-		self.paths = sorted(data_utils.make_dataset(root))
+		self.paths = self._get_paths(root)
 		self.transform = transform
 		self.opts = opts
 		self.predictor = dlib.shape_predictor(predictor_path)
@@ -38,4 +38,12 @@ class InferenceDataset(Dataset):
 
 	def _get_paths(self, root):
 		paths = sorted(data_utils.make_dataset(root))
+		result_paths = []
+		for path in paths:
+			try:
+				align_face(filepath=path, predictor=self.predictor, mtcnn_detector=self.mtcnn_detector)
+				result_paths.append(path)
+			except Exception:
+				continue
+		return result_paths
 
